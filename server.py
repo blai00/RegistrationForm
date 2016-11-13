@@ -10,10 +10,13 @@ NAME_REGEX = re.compile(r'^[a-zA-Z\.\+_-]*$')
 def index(): 
 	return render_template("index.html")
 
-@app.route("/process", methods=['Post'])
+@app.route("/process", methods=['POST'])
 def validation():
+	if request.form == {}:
+		flash('All fields are blank.')
 	data = request.form
 	print data
+
 	if len(request.form['email'] or request.form['first_name'] or request.form['last_name'] or request.form['password'] or request.form['confirm_password']) < 1:
 		flash('One or more field is blank. Please make sure all fields are filled out.')
 		return redirect('/')
